@@ -17,14 +17,16 @@ function initBrowser() {
                       type: "wig",
                       format: "bigWig",
                       url: '/download?file=tr_11.bw',
-                      name: 'BigWig'
+                      name: 'BigWig',
+                      displayMode: "COLLAPSED"
                   },
                   {
-                      type: "annotation",
-                      format: "bed",
-                      url: '/download?file=tr_11.bed',
-                      name: 'Bed'
-                  },
+                      type: "wig",
+                      format: "bedGraph",
+                      url: '/download?file=tr_11.bedGraph',
+                      name: 'BedGraph',
+                      displayMode: "COLLAPSED"
+                  }
 
 
               ]

@@ -57,7 +57,7 @@ def download():
  
     pp.pprint( filename )
     
-    if filename.endswith( ".bed" ) :
+    if filename.endswith( ".bedGraph" ) :
         mimetype = "text/plain"
 
 
