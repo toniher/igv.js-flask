@@ -1,7 +1,8 @@
 import requests
 import re
 import os
-from flask import Response, request, abort, render_template, url_for, Blueprint
+import pprint
+from flask import Response, make_response, request, abort, render_template, url_for, Blueprint
 from igvjs._config import basedir
 
 seen_tokens = set()
@@ -40,6 +41,35 @@ def before_request():
             if "static/data" in request.path and "data/static/data" not in request.path:
                 abort(401)
     return ranged_data_response(request.headers.get('Range', None), request.path[1:])
+
+
+@igvjs_blueprint.route('/download')
+def download():
+   
+    pp = pprint.PrettyPrinter(indent=4)
+    range_header = request.headers.get('Range', None)
+    pp.pprint( range_header )
+ 
+    filename = "tr_11.bw"
+    mimetype = "application/octet-stream"
+    if request.args.get('file'):
+        filename = request.args.get('file')
+ 
+    pp.pprint( filename )
+    
+    if filename.endswith( ".bed" ) :
+        mimetype = "text/plain"
+
+
+    with open(igvjs_blueprint.config['DATA_PATH']+"/"+filename, 'rb') as f:
+        body = f.read()
+    
+    response = make_response(body)
+    response.headers["Content-type"] = mimetype
+    response.headers["Content-Disposition"] = "attachment; filename="+filename
+
+    return response
+
 
 def allowed_emails():
     emails = []

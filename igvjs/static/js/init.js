@@ -6,30 +6,27 @@ function initBrowser() {
   div = $("#myDiv")[0];
   options = {
       reference: {
-          id: "hg19",
-          fastaURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/1kg_v37/human_g1k_v37_decoy.fasta",
-          cytobandURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/b37/b37_cytoband.txt"
+          id: "virtual",
+          fastaURL: "/static/data/public/chr1.fa",
+          indexURL: "/static/data/public/chr1.fa.fai"
       },
-      locus: "22:24,375,771-24,376,878",
+          locus: "chr1:1-1857976",
       tracks:
               [
                   {
-                      name: "Genes",
-                      searchable: false,
-                      type: "annotation",
-                      format: "gtf",
-                      sourceType: "file",
-                      url: "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/gencode.v18.annotation.sorted.gtf.gz",
-                      indexURL: "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/gencode.v18.annotation.sorted.gtf.gz.tbi",
-                      visibilityWindow: 10000000,
-                      order: Number.MAX_VALUE,
-                      displayMode: "EXPANDED"
+                      type: "wig",
+                      format: "bigWig",
+                      url: '/download?file=tr_11.bw',
+                      name: 'BigWig'
                   },
                   {
-                      url: 'static/data/public/gstt1_sample.bam',
-                      name: 'GSTT1 Alignments',
-                      height: 500
-                  }
+                      type: "annotation",
+                      format: "bed",
+                      url: '/download?file=tr_11.bed',
+                      name: 'Bed'
+                  },
+
+
               ]
   };
 
