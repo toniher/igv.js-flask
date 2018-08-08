@@ -86,6 +86,11 @@ def ranged_data_response(range_header, rel_path):
     size = os.path.getsize(path)
     offset = int(m.group(1))
     length = int(m.group(2) or size) - offset
+    
+    pp = pprint.PrettyPrinter(indent=4)
+
+    pp.pprint( offset )
+    pp.pprint( length )
 
     data = None
     with open(path, 'rb') as f:
