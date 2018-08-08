@@ -6,34 +6,13 @@ function initBrowser() {
   div = $("#myDiv")[0];
   options = {
       reference: {
-          id: "virtual",
-          fastaURL: "/static/data/public/chr1.fa",
-          indexURL: "/static/data/public/chr1.fa.fai"
+          id: "hg19",
+          fastaURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/1kg_v37/human_g1k_v37_decoy.fasta",
+          cytobandURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/b37/b37_cytoband.txt"
       },
-          locus: "chr1:1-1857976",
+      locus: "chr21:33,031,597-33,041,570",
       tracks:
               [
-                  {
-                      type: "wig",
-                      format: "bigWig",
-                      url: '/download/tr_11.bw',
-                      name: 'BigWig',
-                      displayMode: "COLLAPSED"
-                  },
-                  {
-                      type: "wig",
-                      format: "bigWig",
-                      url: 'static/data/public/tr_11.bw',
-                      name: 'BigWig-static',
-                      displayMode: "COLLAPSED"
-                  },
-                  {
-                      type: "wig",
-                      format: "bedGraph",
-                      url: '/download/tr_11.bedGraph',
-                      name: 'BedGraph',
-                      displayMode: "COLLAPSED"
-                  },
                   {
                       type: "wig",
                       format: "bigWig",
