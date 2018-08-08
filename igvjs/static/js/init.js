@@ -16,16 +16,29 @@ function initBrowser() {
                   {
                       type: "wig",
                       format: "bigWig",
-                      url: '/download?file=tr_11.bw',
+                      url: '/download/tr_11.bw',
                       name: 'BigWig',
                       displayMode: "COLLAPSED"
                   },
                   {
                       type: "wig",
+                      format: "bigWig",
+                      url: 'static/data/public/tr_11.bw',
+                      name: 'BigWig-static',
+                      displayMode: "COLLAPSED"
+                  },
+                  {
+                      type: "wig",
                       format: "bedGraph",
-                      url: '/download?file=tr_11.bedGraph',
+                      url: '/download/tr_11.bedGraph',
                       name: 'BedGraph',
                       displayMode: "COLLAPSED"
+                  },
+                  {
+                      type: "wig",
+                      format: "bigWig",
+                      url: 'static/data/public/bigWigExample.bw',
+                      name: 'BigWig from UCSC',
                   }
 
 

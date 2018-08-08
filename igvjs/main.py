@@ -43,18 +43,15 @@ def before_request():
     return ranged_data_response(request.headers.get('Range', None), request.path[1:])
 
 
-@igvjs_blueprint.route('/download')
-def download():
+@igvjs_blueprint.route('/download/<filename>')
+def download(filename):
    
     pp = pprint.PrettyPrinter(indent=4)
     range_header = request.headers.get('Range', None)
     pp.pprint( range_header )
  
-    filename = "tr_11.bw"
     mimetype = "application/octet-stream"
-    if request.args.get('file'):
-        filename = request.args.get('file')
- 
+
     pp.pprint( filename )
     
     if filename.endswith( ".bedGraph" ) :
