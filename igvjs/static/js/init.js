@@ -5,20 +5,16 @@ function initBrowser() {
 
   div = $("#myDiv")[0];
   options = {
-      reference: {
-          id: "hg19",
-          fastaURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/1kg_v37/human_g1k_v37_decoy.fasta",
-          cytobandURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/b37/b37_cytoband.txt"
-      },
-      locus: "chr21:33,031,597-33,041,570",
+      showNavigation: true,
+      showRuler: true,
+      genome: "hg19",
+      locus: 'chr1:1-1,857,974',
       tracks:
               [
-                  {
-                      type: "wig",
-                      format: "bigWig",
-                      url: 'static/data/public/bigWigExample.bw',
-                      name: 'BigWig from UCSC',
-                  }
+                      {
+                            url: 'static/data/public/tr_2.bw',
+                            name: "tr_2"
+                        },
 
 
               ]
