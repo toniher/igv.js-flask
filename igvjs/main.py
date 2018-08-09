@@ -21,6 +21,10 @@ def show_vcf():
 
 @igvjs_blueprint.before_app_request
 def before_request():
+    
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint( request.path )
+    
     if igvjs_blueprint.config['USES_OAUTH'] and (not igvjs_blueprint.config['PUBLIC_DIR'] or \
             not os.path.exists('.'+igvjs_blueprint.config['PUBLIC_DIR']) or \
             not request.path.startswith(igvjs_blueprint.config['PUBLIC_DIR'])):
@@ -39,6 +43,7 @@ def before_request():
                     abort(403)
         else:
             if "static/data" in request.path and "data/static/data" not in request.path:
+                pp.pprint( "triggered error" )
                 abort(401)
     return ranged_data_response(request.headers.get('Range', None), request.path[1:])
 
@@ -77,6 +82,12 @@ def allowed_emails():
     return emails
 
 def ranged_data_response(range_header, rel_path):
+    
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint( basedir )
+    pp.pprint( range_header )
+    pp.pprint( rel_path )
+
     path = os.path.join(basedir, rel_path)
     if not range_header:
         return None
@@ -85,7 +96,7 @@ def ranged_data_response(range_header, rel_path):
         return "Error: unexpected range header syntax: {}".format(range_header)
     size = os.path.getsize(path)
     offset = int(m.group(1))
-    length = int(m.group(2) or size) - offset
+    length = int(m.group(2) or size) - offset + 1
     
     pp = pprint.PrettyPrinter(indent=4)
 
