@@ -24,6 +24,13 @@ function initBrowser() {
                             name: "bigWig via download"
                       },
 
+                      {
+                            url: '/down?file=bigWigExample.bw',
+                            name: "bigWig via down",
+                            type: "wig",
+                            format: "bigWig"
+                      }
+
               ]
   };
 

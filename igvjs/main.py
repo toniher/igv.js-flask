@@ -45,7 +45,16 @@ def before_request():
             if "static/data" in request.path and "data/static/data" not in request.path:
                 pp.pprint( "triggered error" )
                 abort(401)
-    return ranged_data_response(request.headers.get('Range', None), request.path[1:])
+                
+    if request.args.get('file'):
+        filename = request.args.get('file')
+        pp.pprint( "FILE" )
+        pp.pprint( filename )
+    
+        return ranged_data_response(request.headers.get('Range', None), filename, True )
+
+    else :
+        return ranged_data_response(request.headers.get('Range', None), request.path[1:], False )
 
 
 @igvjs_blueprint.route('/download/<filename>')
@@ -72,6 +81,40 @@ def download(filename):
 
     return response
 
+@igvjs_blueprint.route('/down')
+def down():
+   
+    pp = pprint.PrettyPrinter(indent=4)
+    range_header = request.headers.get('Range', None)
+    pp.pprint( range_header )
+ 
+    filename = None
+ 
+    if request.args.get('file'):
+        filename = request.args.get('file')
+ 
+    mimetype = "application/octet-stream"
+
+    pp.pprint( filename )
+    
+    if filename :
+    
+        if filename.endswith( ".bedGraph" ) :
+            mimetype = "text/plain"
+    
+    
+        with open(igvjs_blueprint.config['DATA_PATH']+"/"+filename, 'rb') as f:
+            body = f.read()
+        
+        response = make_response(body)
+        response.headers["Content-type"] = mimetype
+        response.headers["Content-Disposition"] = "attachment; filename="+filename
+
+        return response
+
+    else :
+        
+        return False
 
 def allowed_emails():
     emails = []
@@ -81,14 +124,22 @@ def allowed_emails():
                 emails.append(line.strip())
     return emails
 
-def ranged_data_response(range_header, rel_path):
+def ranged_data_response(range_header, rel_path, param):
     
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint( basedir )
     pp.pprint( range_header )
     pp.pprint( rel_path )
 
-    path = os.path.join(basedir, rel_path)
+    if rel_path.startswith("download/") :
+        filename = rel_path.replace("download/", "")
+        path = igvjs_blueprint.config['DATA_PATH']+"/"+filename
+    else :
+        if param :
+            path = igvjs_blueprint.config['DATA_PATH']+"/"+rel_path
+        else :
+            path = os.path.join(basedir, rel_path)
+    
     if not range_header:
         return None
     m = re.search('(\d+)-(\d*)', range_header)
